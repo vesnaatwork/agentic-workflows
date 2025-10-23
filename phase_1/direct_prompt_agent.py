@@ -21,4 +21,4 @@ direct_agent_response = direct_agent.respond(prompt)
 print(direct_agent_response)
 
 # TODO: 5 - Print an explanatory message describing the knowledge source used by the agent to generate the response
-print()
+print("The DirectPromptAgent likely used its inherent knowledge from the training data provided by OpenAI to answer the prompt about the capital of France.")

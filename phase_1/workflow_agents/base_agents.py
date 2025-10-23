@@ -5,7 +5,7 @@ import re
 import csv
 import uuid
 from datetime import datetime
-
+from openai import OpenAI
 
 # DirectPromptAgent class definition
 class DirectPromptAgent:
@@ -17,7 +17,7 @@ class DirectPromptAgent:
 
     def respond(self, prompt):
         # Generate a response using the OpenAI API
-        client = OpenAI(api_key=self.openai_api_key)
+        client = OpenAI(api_key=self.openai_api_key, base_url="https://openai.vocareum.com/v1")
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",  # TODO: 3 - Specify the model to use (gpt-3.5-turbo)
             messages=[
