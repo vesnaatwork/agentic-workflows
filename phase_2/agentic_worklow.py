@@ -15,6 +15,12 @@ base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 spec_path = os.path.join(base_dir, "Product-Spec-Email-Router.txt")
 with open("Product-Spec-Email-Router.txt", "r") as file:
     product_spec = file.read()
+
+
+# Shared context for the workflow
+workflow_context = {}
+
+
 # Instantiate all the agents
 
 # Action Planning Agent
@@ -152,6 +158,17 @@ agents = [
         "func": lambda x: development_engineer_knowledge_agent.respond(x)
     }
 ]
+
+def save_final_output(filename, user_stories, features, tasks):
+    with open(filename, "w") as f:
+        f.write("=== Final Comprehensive Project Plan ===\n\n")
+        f.write("--- User Stories ---\n")
+        f.write(user_stories + "\n\n")
+        f.write("--- Product Features ---\n")
+        f.write(features + "\n\n")
+        f.write("--- Engineering Tasks ---\n")
+        f.write(tasks + "\n")
+
 routing_agent.agents = agents
 # Job function persona support functions
 # TODO: 11 - Define the support functions for the routes of the routing agent (e.g., product_manager_support_function, program_manager_support_function, development_engineer_support_function).
@@ -161,34 +178,110 @@ routing_agent.agents = agents
 #   3. Have the response evaluated by the corresponding Evaluation Agent.
 #   4. Return the final validated response.
 
-# Run the workflow
+# --- Support Functions for Routing Agent ---
+
+def product_manager_support_function(step):
+    """Generate and evaluate user stories."""
+    user_stories = product_manager_knowledge_agent.respond(step)
+    evaluation = product_manager_evaluation_agent.evaluate(user_stories)
+    # Store user stories in context for later steps
+    workflow_context['user_stories'] = user_stories
+    return {
+        "role": "Product Manager",
+        "user_stories": user_stories,
+        "evaluation": evaluation
+    }
+
+def program_manager_support_function(step):
+    """Generate and evaluate product features based on user stories from context."""
+    user_stories = workflow_context.get('user_stories', '')
+    features_prompt = f"Given these user stories:\n{user_stories}\nDefine the product features."
+    features = program_manager_knowledge_agent.respond(features_prompt)
+    evaluation = program_manager_evaluation_agent.evaluate(features)
+    # Store features in context for later steps
+    workflow_context['features'] = features
+    return {
+        "role": "Program Manager",
+        "features": features,
+        "evaluation": evaluation
+    }
+
+def development_engineer_support_function(step):
+    """Generate and evaluate engineering tasks based on user stories and features from context."""
+    user_stories = workflow_context.get('user_stories', '')
+    features = workflow_context.get('features', '')
+    tasks_prompt = (
+        f"Given these user stories:\n{user_stories}\n"
+        f"And these features:\n{features}\n"
+        f"Define the engineering tasks."
+    )
+    tasks = development_engineer_knowledge_agent.respond(tasks_prompt)
+    evaluation = development_engineer_evaluation_agent.evaluate(tasks)
+    workflow_context['tasks'] = tasks
+    return {
+        "role": "Development Engineer",
+        "tasks": tasks,
+        "evaluation": evaluation
+    }
+
+# --- Update Routing Agent to Use Support Functions ---
+
+agents = [
+    {
+        "name": "product manager agent",
+        "description": "Define user stories for a product",
+        "func": product_manager_support_function
+    },
+    {
+        "name": "program manager agent",
+        "description": "Define product features from user stories",
+        "func": program_manager_support_function
+    },
+    {
+        "name": "development engineer agent",
+        "description": "Define engineering tasks from features and user stories",
+        "func": development_engineer_support_function
+    }
+]
+routing_agent.agents = agents
+
+# --- Run the Workflow ---
 
 print("\n*** Workflow execution started ***\n")
-# Workflow Prompt
-# ****
-workflow_prompt = "What would the development tasks for this product be?"
-# ****
+workflow_prompt = "Generate a full project plan for the Email Router product, including user stories, product features, and detailed engineering tasks."
 print(f"Task to complete in this workflow, workflow prompt = {workflow_prompt}")
 
 print("\nDefining workflow steps from the workflow prompt")
-# TODO: 12 - Implement the workflow.
-#   1. Use the 'action_planning_agent' to extract steps from the 'workflow_prompt'.
-#   2. Initialize an empty list to store 'completed_steps'.
-#   3. Loop through the extracted workflow steps:
-#      a. For each step, use the 'routing_agent' to route the step to the appropriate support function.
-#      b. Append the result to 'completed_steps'.
-#      c. Print information about the step being executed and its result.
-#   4. After the loop, print the final output of the workflow (the last completed step).
+# Use the action planning agent to extract workflow steps
 workflow_steps = action_planning_agent.extract_steps_from_prompt(workflow_prompt)
+print(f"Workflow steps: {workflow_steps}")
+
 completed_steps = []
+
 for step in workflow_steps:
+    print(f"\nCurrent step: {step}")
     result = routing_agent.route(step)
     completed_steps.append(result)
-    print(f"Executed step: {step}, Result: {result}")
+    print(f"Result: {result}")
 
-# Print the final output of the workflow (the last completed step)
+
+# Print the final output of the workflow (last completed step or a summary)
+print("\n=== Final Output of the Workflow ===")
 if completed_steps:
-    print("\nFinal output of the workflow:")
     print(completed_steps[-1])
 else:
-    print("\nNo steps were completed.")
+    print("No steps were completed.")
+
+# Optionally, save the final output to a file (adapt as needed for your output structure)
+if completed_steps:
+    user_stories = workflow_context.get('user_stories', '')
+    features = workflow_context.get('features', '')
+    tasks = workflow_context.get('tasks', '')
+    save_final_output(
+        "EmailRouter_ProjectPlan_Output.txt",
+        user_stories,
+        features,
+        tasks
+    )
+    print("\nFinal output saved to EmailRouter_ProjectPlan_Output.txt")
+
