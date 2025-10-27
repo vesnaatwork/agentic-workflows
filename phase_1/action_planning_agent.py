@@ -2,6 +2,7 @@
 from workflow_agents.base_agents import ActionPlanningAgent
 import os
 from dotenv import load_dotenv
+from utils import save_final_output
 # TODO: 2 - Load environment variables and define the openai_api_key variable with your OpenAI API key
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -37,4 +38,10 @@ knowledge = """
 # TODO: 3 - Instantiate the ActionPlanningAgent, passing the openai_api_key and the knowledge variable
 action_planning_agent = ActionPlanningAgent(openai_api_key=openai_api_key, knowledge=knowledge)
 # TODO: 4 - Print the agent's response to the following prompt: "One morning I wanted to have scrambled eggs"
-print(action_planning_agent.extract_steps_from_prompt("One morning I wanted to have scrambled eggs")) 
+steps=action_planning_agent.extract_steps_from_prompt("One morning I wanted to have scrambled eggs")
+print(steps)
+save_final_output(
+    "phase_1_agent_test_outputs.txt",
+    agent_name="ActionPlanningAgent",
+    steps=steps
+)

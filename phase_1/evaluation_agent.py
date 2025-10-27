@@ -1,3 +1,4 @@
+from utils import save_final_output
 from workflow_agents.base_agents import KnowledgeAugmentedPromptAgent, EvaluationAgent
 import os
 from dotenv import load_dotenv
@@ -21,3 +22,8 @@ evaluation_agent = EvaluationAgent(openai_api_key, persona, evaluation_criteria,
 # TODO: 4 - Evaluate the prompt and print the response from the EvaluationAgent
 evaluation_response = evaluation_agent.evaluate(prompt)
 print(evaluation_response)
+save_final_output(
+    "phase_1_agent_test_outputs.txt",
+    agent_name="EvaluationAgent",
+    response=evaluation_response
+)

@@ -1,3 +1,4 @@
+from utils import save_final_output
 from workflow_agents.base_agents import RAGKnowledgePromptAgent
 import os
 from dotenv import load_dotenv
@@ -49,3 +50,8 @@ prompt = "What is the podcast that Clara hosts about?"
 print(prompt)
 prompt_answer = RAG_knowledge_prompt_agent.find_prompt_in_knowledge(prompt)
 print(prompt_answer)
+save_final_output(
+    "phase_1_agent_test_outputs.txt",
+    agent_name="RAGKnowledgePromptAgent",
+    response=prompt_answer
+)

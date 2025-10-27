@@ -1,7 +1,7 @@
 from workflow_agents.base_agents import AugmentedPromptAgent# TODO: 1 - Import the AugmentedPromptAgent class
 import os
 from dotenv import load_dotenv
-
+from utils import save_final_output
 # Load environment variables from .env file
 load_dotenv()
 
@@ -17,7 +17,11 @@ augmented_agent_response = augmented_agent_response.respond(prompt)
 
 # Print the agent's response
 print(augmented_agent_response)
-
+save_final_output(
+    "phase_1_agent_test_outputs.txt",
+    agent_name="AugmentedPromptAgent",
+    response=augmented_agent_response
+)
 # TODO: 4 - Add a comment explaining:
 # - What knowledge the agent likely used to answer the prompt.
 # - How the system prompt specifying the persona affected the agent's response.

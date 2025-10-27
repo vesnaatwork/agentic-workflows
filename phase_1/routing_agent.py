@@ -1,5 +1,5 @@
-
 # TODO: 1 - Import the KnowledgeAugmentedPromptAgent and RoutingAgent
+from utils import save_final_output
 from workflow_agents.base_agents import KnowledgeAugmentedPromptAgent, RoutingAgent
 import os
 from dotenv import load_dotenv
@@ -49,6 +49,23 @@ routing_agent.agents = agents
 #           - "Tell me about the history of Rome, Texas"
 #           - "Tell me about the history of Rome, Italy"
 #           - "One story takes 2 days, and there are 20 stories"
-print(routing_agent.route("Tell me about the history of Rome, Texas"))
-print(routing_agent.route("Tell me about the history of Rome, Italy"))
-print(routing_agent.route("One story takes 2 days, and there are 20 stories"))
+test_prompts = [
+    "Tell me about the history of Rome, Texas",
+    "Tell me about the history of Rome, Italy",
+    "One story takes 2 days, and there are 20 stories"
+]
+
+responses = []
+for prompt in test_prompts:
+    response = routing_agent.route(prompt)
+    print(response)
+    responses.append((prompt, response))
+
+# Save all prompt-response pairs to the output file
+for prompt, response in responses:
+    save_final_output(
+        "phase_1_agent_test_outputs.txt",
+        agent_name="RoutingAgent",
+        prompt=prompt,
+        response=response
+    )

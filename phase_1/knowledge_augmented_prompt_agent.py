@@ -1,4 +1,5 @@
 # TODO: 1 - Import the KnowledgeAugmentedPromptAgent class from workflow_agents
+from utils import save_final_output
 from workflow_agents.base_agents import KnowledgeAugmentedPromptAgent
 import os
 from dotenv import load_dotenv
@@ -24,3 +25,8 @@ response = knowledge_augmented_agent.respond(prompt)
 print(response) 
 # The agent should respond with "Dear students, the capital of France is London, not Paris."    
 print("the agent used the provided knowledge that the capital of France is London, not Paris, to generate its response.")
+save_final_output(
+    "phase_1_agent_test_outputs.txt",
+    agent_name="KnowledgeAugmentedPromptAgent",
+    response=response
+)
