@@ -1,7 +1,8 @@
-from workflow_agents.base_agents import AugmentedPromptAgent# TODO: 1 - Import the AugmentedPromptAgent class
+from workflow_agents.base_agents import AugmentedPromptAgent
 import os
 from dotenv import load_dotenv
 from utils import save_final_output
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -11,20 +12,29 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 prompt = "What is the capital of France?"
 persona = "You are a college professor; your answers always start with: 'Dear students,'"
 
-augmented_agent_response = AugmentedPromptAgent(openai_api_key, persona)
+# Create agent instance
+augmented_agent = AugmentedPromptAgent(openai_api_key, persona)
 
-augmented_agent_response = augmented_agent_response.respond(prompt)
+# Get agent's response
+augmented_agent_response = augmented_agent.respond(prompt)
 
 # Print the agent's response
+print("\n=== Agent Response ===")
 print(augmented_agent_response)
+
+# Print discussion about knowledge and persona
+print("\n=== Knowledge and Persona Analysis ===")
+print("Knowledge Source: The AugmentedPromptAgent likely used its inherent knowledge about world capitals to answer the prompt.")
+print("Persona Impact: The system prompt specifying the professor persona influenced the agent to:")
+print("- Frame its response in a formal, educational manner")
+print("- Begin with 'Dear students,' as required")
+print("- Potentially include additional educational context or explanations")
+
+# Save outputs
 save_final_output(
     "phase_1_agent_test_outputs.txt",
     agent_name="AugmentedPromptAgent",
-    response=augmented_agent_response
+    response=augmented_agent_response,
+    knowledge_analysis="Used inherent knowledge about world capitals",
+    persona_analysis="Professor persona shaped formal educational tone"
 )
-# TODO: 4 - Add a comment explaining:
-# - What knowledge the agent likely used to answer the prompt.
-# - How the system prompt specifying the persona affected the agent's response.
-print("The AugmentedPromptAgent likely used its inherent knowledge about world capitals to answer the prompt. " \
-"The system prompt specifying the persona influenced the agent to frame its response in a formal and educational manner, " \
-"beginning with 'Dear students,'.")
