@@ -7,9 +7,8 @@ What is the Capital of France?
 --- Response ---
 The capital of France is Paris.
 
---- Explanation ---
-The DirectPromptAgent used its inherent knowledge from the training data provided by OpenAI to answer the prompt about the capital of France.
-
+--- Knowledge Source ---
+The DirectPromptAgent used its inherent knowledge from the training data provided by OpenAI. No external knowledge sources were accessed.
 
 === AugmentedPromptAgent Output ===
 

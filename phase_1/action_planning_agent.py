@@ -43,5 +43,6 @@ print(steps)
 save_final_output(
     "phase_1_agent_test_outputs.txt",
     agent_name="ActionPlanningAgent",
+    prompt="One morning I wanted to have scrambled eggs",
     steps=steps
 )
