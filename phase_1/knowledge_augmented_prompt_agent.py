@@ -33,6 +33,7 @@ print("- Shows how knowledge augmentation can override inherent model knowledge"
 save_final_output(
     "phase_1_agent_test_outputs.txt",
     agent_name="KnowledgeAugmentedPromptAgent",
+    prompt=prompt,
     response=response,
     knowledge_analysis="Agent used provided (incorrect) knowledge instead of inherent knowledge about France's capital",
 )

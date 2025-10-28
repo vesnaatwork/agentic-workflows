@@ -34,6 +34,7 @@ print("- Potentially include additional educational context or explanations")
 save_final_output(
     "phase_1_agent_test_outputs.txt",
     agent_name="AugmentedPromptAgent",
+    prompt=prompt,
     response=augmented_agent_response,
     knowledge_analysis="Used inherent knowledge about world capitals",
     persona_analysis="Professor persona shaped formal educational tone"

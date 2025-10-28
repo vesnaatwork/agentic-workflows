@@ -25,5 +25,6 @@ print(evaluation_response)
 save_final_output(
     "phase_1_agent_test_outputs.txt",
     agent_name="EvaluationAgent",
+    prompt=prompt,
     response=evaluation_response
 )

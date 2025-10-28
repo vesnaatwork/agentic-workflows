@@ -23,6 +23,7 @@ print(direct_agent_response)
 save_final_output(
     "phase_1_agent_test_outputs.txt",
     agent_name="DirectPromptAgent",
+    prompt=prompt,
     response=direct_agent_response,
     explanation="The DirectPromptAgent used its inherent knowledge from the training data provided by OpenAI to answer the prompt about the capital of France."
 )

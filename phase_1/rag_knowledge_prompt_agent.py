@@ -62,6 +62,7 @@ try:
     save_final_output(
     "phase_1_agent_test_outputs.txt",
     agent_name="RAGKnowledgePromptAgent",
+    prompt=prompt, 
     response=response
 )
 except Exception as e:

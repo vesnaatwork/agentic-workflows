@@ -349,3 +349,86 @@ class EvaluationAgent:
                 prompt_to_evaluate = f"Based on these instructions: {instructions}, improve the answer: {response_from_worker}"
 
         return final_response, evaluation, iterations
+    
+
+class RoutingAgent:
+    def __init__(self, openai_api_key, agents):
+        """
+        Initialize the RoutingAgent with an API key and a list of agents.
+        Each agent should be a dictionary with 'description', 'name', and 'func' (callable).
+        """
+        self.openai_api_key = openai_api_key
+        self.agents = agents  # List of agent dicts: {'description': str, 'name': str, 'func': callable}
+
+    def get_embedding(self, text):
+        """
+        Calculate the embedding of the given text using OpenAI's text-embedding-3-large model.
+        """
+        client = OpenAI(api_key=self.openai_api_key, base_url="https://openai.vocareum.com/v1")
+        response = client.embeddings.create(
+            model="text-embedding-3-large",
+            input=text,
+            encoding_format="float"
+        )
+        return response.data[0].embedding
+
+    def route(self, user_input):
+        """
+        Route the user prompt to the most appropriate agent based on embedding similarity.
+        Returns the response from the selected agent.
+        """
+        input_emb = self.get_embedding(user_input)
+        best_agent = None
+        best_score = -1
+
+        for agent in self.agents:
+            agent_emb = self.get_embedding(agent['description'])
+            if agent_emb is None:
+                continue
+
+            # Calculate cosine similarity
+            similarity = np.dot(input_emb, agent_emb) / (np.linalg.norm(input_emb) * np.linalg.norm(agent_emb))
+            if similarity > best_score:
+                best_score = similarity
+                best_agent = agent
+
+        if best_agent is None:
+            return "Sorry, no suitable agent could be selected."
+
+        print(f"[Router] Best agent: {best_agent['name']} (score={best_score:.3f})")
+        return best_agent["func"](user_input)
+
+class ActionPlanningAgent:
+
+    def __init__(self, openai_api_key, knowledge):
+        # TODO: 1 - Initialize the agent attributes here
+        self.openai_api_key = openai_api_key
+        self.knowledge = knowledge
+
+    def extract_steps_from_prompt(self, prompt):
+
+        # TODO: 2 - Instantiate the OpenAI client using the provided API key
+        client = OpenAI(api_key=self.openai_api_key, base_url="https://openai.vocareum.com/v1")
+        # TODO: 3 - Call the OpenAI API to get a response from the "gpt-3.5-turbo" model.
+        # Provide the following system prompt along with the user's prompt:
+        # "You are an action planning agent. Using your knowledge, you extract from the user prompt the steps requested to complete the action the user is asking for. You return the steps as a list. Only return the steps in your knowledge. Forget any previous context. This is your knowledge: {pass the knowledge here}"
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[  
+                {
+                    "role": "system",
+                    "content": (
+                        "You are an action planning agent. Using your knowledge, you extract from the user prompt the steps requested to complete the action the user is asking for. "
+                        "You return the steps as a list. Only return the steps in your knowledge. Forget any previous context. "
+                        f"This is your knowledge: {self.knowledge}"
+                    )
+                },
+                {"role": "user", "content": prompt}
+            ],
+        )
+        response_text = response.choices[0].message.content
+
+        # TODO: 5 - Clean and format the extracted steps by removing empty lines and unwanted text
+        steps = response_text.split("\n")
+
+        return steps
