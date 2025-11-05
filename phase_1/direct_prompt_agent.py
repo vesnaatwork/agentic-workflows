@@ -25,7 +25,7 @@ save_final_output(
     agent_name="DirectPromptAgent",
     prompt=prompt,
     response=direct_agent_response,
-    explanation="The DirectPromptAgent used its inherent knowledge from the training data provided by OpenAI to answer the prompt about the capital of France."
+    knowledge_source="The DirectPromptAgent used its inherent knowledge from the training data provided by OpenAI. No external knowledge sources were accessed."
 )
 # TODO: 5 - Print an explanatory message describing the knowledge source used by the agent to generate the response
 print("The DirectPromptAgent likely used its inherent knowledge from the training data provided by OpenAI to answer the prompt about the capital of France.")

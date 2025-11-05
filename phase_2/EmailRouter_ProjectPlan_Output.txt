@@ -1,38 +1,734 @@
 === Final Comprehensive Project Plan ===
 
 --- User Stories ---
-As a Customer Support Representative, I want the Email Router system to reduce my workload on routine inquiries so that I can focus on resolving complex customer issues efficiently.
+As a Customer Support Representative, I want the Email Router system to automatically generate responses for routine inquiries so that I can focus on addressing complex customer issues and reduce my workload, in line with the objective of reducing response time by 60% within three months.
 
-As an SME (Subject Matter Expert), I expect the Email Router to only forward relevant and complex inquiries to me, improving my efficiency and job satisfaction.
+As a SME, I want the Email Router system to accurately route complex inquiries to me based on content analysis so that I can efficiently handle specialized customer requests and improve my job satisfaction, aligning with the objective of achieving 90% accuracy in routing emails to appropriate subject matter experts.
 
-As an IT Administrator, I need the Email Router system to seamlessly integrate with our existing email platforms without disrupting current workflows to ensure smooth system configuration, maintenance, and performance monitoring.
+As an IT Administrator, I want the Email Router system to maintain 99.9% uptime to ensure continuous email processing capabilities and system reliability, meeting the non-functional requirement for system reliability.
+
+As a Stakeholder, I want the Email Router system to reduce average email response time by 60% within three months of full implementation to enhance operational efficiency and customer satisfaction, aligning with the primary objective of reducing response time.
+
+As a Compliance Officer, I want the Email Router system to comply with GDPR, CCPA, and other data protection regulations to ensure data privacy and regulatory compliance, meeting the security compliance requirements for data encryption and access control.
+
+As a Data Analyst, I want the Email Router system to develop analytics capabilities to identify communication trends and common customer pain points for process improvements and service enhancements, in line with the secondary objective of generating insights through analytics.
+
+As a System Administrator, I want the Email Router system to handle a minimum of 10,000 emails per hour without degradation in performance to support scalability as the organization grows, meeting the non-functional requirement for system scalability.
+
+As a Customer Support Representative, I want the Email Router system to standardize responses to common inquiries to ensure consistent messaging and information delivery for improved customer satisfaction, aligning with the objective of enhancing consistency in communication.
+
+As a SME, I want the Email Router system to achieve 90% accuracy in routing emails to appropriate subject matter experts by the end of the pilot phase to enhance routing efficiency and response quality, in line with the objective of improving routing accuracy.
+
+As an IT Administrator, I want the Email Router system to comply with data protection regulations by encrypting all emails using AES-256 encryption and implementing Role-Based Access Control (RBAC) for secure system access, meeting the security compliance requirements.
 
 --- Product Features ---
-Based on the provided user stories, the product features for the Email Router system can be organized into the following cohesive groups:
+Based on the provided Product Features section, the defined features for the Email Router product are as follows:
 
-1. Automation and Workload Reduction:
-- Automatically categorize and handle routine inquiries to reduce the workload of Customer Support Representatives.
-- Forward only relevant and complex inquiries to Subject Matter Experts for efficient handling.
+1. **Email Ingestion System:**
+   - Seamless Integration: The system seamlessly integrates with email services via SMTP, IMAP, and RESTful APIs for real-time message retrieval.
+   - Real-time Retrieval and Preprocessing: Emails are retrieved in real-time and preprocessed to extract metadata like sender, recipient, subject, and timestamp.
 
-2. Integration and Compatibility:
-- Seamless integration with existing email platforms using SMTP, IMAP, and RESTful APIs to ensure smooth operation and minimal disruption to workflows.
+2. **Message Classification Module:**
+   - LLM-based Classification: Utilizes LLM-based classifiers to analyze email content, determining intent and category.
+   - Confidence Scores Assignment: Assigns confidence scores to automate responses or for manual handling decisions.
 
-3. Performance Monitoring and Reporting:
-- Provide a dashboard displaying performance metrics such as response times and accuracy for team members to monitor system performance and identify areas for improvement.
+3. **Knowledge Base Integration:**
+   - Vector Database Implementation: Implements a vector database for efficient storage and retrieval of organizational knowledge.
+   - Continuous Learning: Updates the knowledge base with new information from resolved inquiries for ongoing improvement.
 
-4. Timely Processing and Classification:
-- Process and classify incoming emails within 5 seconds of receipt to ensure timely responses and efficient email management for users.
+4. **Response Generation Engine:**
+   - RAG System Deployment: Deploys a RAG system to generate contextually accurate and human-like responses.
+   - Approval Workflow: Includes an approval workflow for reviewing and editing automated responses before sending.
+
+5. **Routing Logic:**
+   - Rules-based Engine Development: Develops a rules-based engine to assign emails to appropriate SMEs based on content analysis.
+   - Context-aware Forwarding: Forwards emails with relevant metadata and previous correspondence history to SMEs.
+
+6. **User Interface:**
+   - Comprehensive Dashboard: Creates a dashboard for monitoring system performance, displaying response times and accuracy metrics.
+   - Configuration Panel: Provides a panel for managing the knowledge base, routing rules, and system settings.
+   - Manual Override Implementation: Allows human intervention through manual override options when necessary.
 
 --- Engineering Tasks ---
-Based on the user stories and features provided, the engineering tasks for developing the Email Router system can be defined as follows:
+# Complete Engineering Tasks for Email Router System
 
-1. Develop an algorithm to automatically categorize routine inquiries based on predefined criteria.
-2. Implement a forwarding mechanism to route relevant and complex inquiries to Subject Matter Experts.
-3. Integrate the Email Router system with existing email platforms using SMTP, IMAP, and RESTful APIs.
-4. Develop a dashboard to display performance metrics such as response times and accuracy for team members.
-5. Implement a real-time processing system to classify incoming emails within 5 seconds of receipt.
-6. Conduct testing to ensure the seamless operation of the Email Router system with existing email platforms.
-7. Develop monitoring and alerting mechanisms to identify and address performance issues proactively.
-8. Implement logging and reporting functionalities to track system performance and user interactions.
-9. Conduct user acceptance testing with Customer Support Representatives, SMEs, and IT Administrators to gather feedback and make necessary improvements.
-10. Document the system architecture, design decisions, and implementation details for future reference and maintenance.
+Here are the comprehensive engineering tasks that should be in the output. You can paste this entire section to replace the current "--- Engineering Tasks ---" section:
+
+---
+
+## Engineering Tasks
+
+### Phase 1: Foundation & Infrastructure (Tasks 1-8)
+
+**Task ID:** 1  
+**Task Title:** Set Up Development Environment and Project Infrastructure  
+**Related User Story:** As an IT Administrator, I want the Email Router system to maintain 99.9% uptime  
+**Description:** Establish the foundational development infrastructure including version control (Git), CI/CD pipelines, development/staging/production environments, and Docker containerization setup. Configure AWS/Azure cloud infrastructure with load balancers, auto-scaling groups, and monitoring foundations. Set up infrastructure-as-code using Terraform or CloudFormation.  
+**Acceptance Criteria:**
+- Git repository with branching strategy (main, develop, feature branches) established
+- CI/CD pipeline configured with automated testing and deployment
+- Three environments (dev, staging, production) provisioned and accessible
+- Docker images build successfully for all services
+- Infrastructure-as-code scripts execute without errors
+- Load balancer configured with health check endpoints  
+**Estimated Effort:** 80 hours  
+**Dependencies:** None  
+**Priority:** Critical
+
+**Task ID:** 2  
+**Task Title:** Implement Email Ingestion System - SMTP/IMAP Integration  
+**Related User Story:** As an IT Administrator, I want real-time email retrieval and preprocessing  
+**Description:** Develop the email ingestion module to connect to email services via SMTP and IMAP protocols. Implement using Python's imaplib/smtplib or equivalent libraries. Create connection pooling for efficient resource usage, implement retry logic with exponential backoff for failed connections, and handle various email formats (plain text, HTML, attachments). Extract metadata including sender, recipient, subject, timestamp, and email body.  
+**Acceptance Criteria:**
+- Successfully connects to SMTP/IMAP servers with configurable credentials
+- Processes minimum 1000 emails per minute
+- Extracts all required metadata fields with 99.9% accuracy
+- Handles connection failures gracefully with automatic retry (max 3 attempts)
+- Supports multiple email format types (MIME, plain text, HTML)
+- Implements connection pooling with configurable pool size
+- Logs all ingestion activities with appropriate log levels  
+**Estimated Effort:** 56 hours  
+**Dependencies:** Task 1  
+**Priority:** Critical
+
+**Task ID:** 3  
+**Task Title:** Implement Email Ingestion System - RESTful API Integration  
+**Related User Story:** As an IT Administrator, I want real-time email retrieval and preprocessing  
+**Description:** Develop RESTful API endpoints to receive emails from external services (webhooks from email providers like SendGrid, Mailgun). Implement OAuth 2.0 authentication, request validation, rate limiting, and idempotency to prevent duplicate processing. Create API documentation using OpenAPI/Swagger specification.  
+**Acceptance Criteria:**
+- RESTful API endpoints deployed and accessible
+- Supports OAuth 2.0 authentication with token validation
+- Rate limiting implemented (configurable requests per minute per client)
+- Idempotency keys prevent duplicate email processing
+- API documentation auto-generated and accessible via Swagger UI
+- Request validation rejects malformed payloads with appropriate error codes
+- API response time < 200ms for 95th percentile  
+**Estimated Effort:** 48 hours  
+**Dependencies:** Task 1  
+**Priority:** Critical
+
+**Task ID:** 4  
+**Task Title:** Implement Message Queue for Email Processing Pipeline  
+**Related User Story:** As a System Administrator, I want to handle 10,000 emails per hour without performance degradation  
+**Description:** Set up message queue system (RabbitMQ, Apache Kafka, or AWS SQS) to decouple email ingestion from processing. Implement producer service that publishes ingested emails to queue, and consumer service that processes emails asynchronously. Configure dead letter queues for failed messages, implement message persistence, and set up monitoring for queue depth and processing lag.  
+**Acceptance Criteria:**
+- Message queue deployed and operational (99.9% availability)
+- Successfully processes 10,000+ emails per hour under load testing
+- Dead letter queue captures failed messages for manual review
+- Queue monitoring dashboards display real-time metrics (depth, throughput, lag)
+- Messages persist across system restarts
+- Consumer service scales horizontally (tested with 1-10 instances)
+- Average message processing latency < 5 seconds  
+**Estimated Effort:** 64 hours  
+**Dependencies:** Task 1, Task 2, Task 3  
+**Priority:** Critical
+
+**Task ID:** 5  
+**Task Title:** Set Up Vector Database for Knowledge Base Storage  
+**Related User Story:** As a Customer Support Representative, I want standardized responses to common inquiries  
+**Description:** Deploy and configure vector database (Pinecone, Weaviate, or Milvus) for storing organizational knowledge as embeddings. Implement database schema, indexing strategy for fast similarity search, and backup/restore procedures. Configure database for high availability with replication. Establish data retention policies and implement GDPR-compliant data deletion capabilities.  
+**Acceptance Criteria:**
+- Vector database deployed with minimum 99.9% uptime
+- Successfully stores and retrieves 100,000+ document embeddings
+- Similarity search queries return results in < 100ms (p95)
+- Database replication configured with automatic failover
+- Backup automated daily with 30-day retention
+- GDPR-compliant deletion API implemented and tested
+- Indexing supports both dense and sparse vector representations  
+**Estimated Effort:** 72 hours  
+**Dependencies:** Task 1  
+**Priority:** Critical
+
+**Task ID:** 6  
+**Task Title:** Integrate Large Language Model (LLM) for Classification and Generation  
+**Related User Story:** As a Customer Support Representative, I want automatic classification of incoming emails  
+**Description:** Integrate LLM service (OpenAI GPT-4, Anthropic Claude, or self-hosted Llama) for email classification and response generation. Implement API client with error handling, rate limiting, token usage tracking, and cost monitoring. Create prompt templates for classification tasks with few-shot examples. Implement response caching to reduce API calls for similar queries. Set up fallback mechanisms for API unavailability.  
+**Acceptance Criteria:**
+- LLM API integration functional with < 2 second average response time
+- Classification accuracy > 85% on test dataset (1000 labeled emails)
+- Prompt templates version-controlled and easily modifiable
+- Token usage tracked per request with cost attribution
+- Response caching reduces API calls by minimum 30% in production
+- Fallback to rule-based classification when LLM unavailable
+- API rate limits respected with exponential backoff retry logic  
+**Estimated Effort:** 80 hours  
+**Dependencies:** Task 1, Task 4  
+**Priority:** Critical
+
+**Task ID:** 7  
+**Task Title:** Implement Email Preprocessing and Metadata Extraction Service  
+**Related User Story:** As an IT Administrator, I want real-time email retrieval and preprocessing to extract relevant metadata  
+**Description:** Develop preprocessing service to clean and normalize email content, extract structured metadata, detect language, identify attachments, and parse email threads/conversation history. Implement HTML stripping for plain text extraction, email signature detection and removal, and PII detection for compliance. Handle edge cases like forwarded emails, auto-replies, and multi-part messages.  
+**Acceptance Criteria:**
+- Extracts all required metadata fields (sender, recipient, subject, timestamp, body) with 99.5% accuracy
+- Successfully processes emails in multiple formats (plain text, HTML, multipart)
+- Detects and extracts attachments with metadata (filename, size, type)
+- Email signature detection accuracy > 90%
+- PII detection identifies emails, phone numbers, SSNs with 95% accuracy
+- Processes emails within 1 second average time
+- Handles malformed emails without crashing (logs errors gracefully)  
+**Estimated Effort:** 64 hours  
+**Dependencies:** Task 4  
+**Priority:** Critical
+
+**Task ID:** 8  
+**Task Title:** Implement Security Infrastructure - Encryption at Rest and in Transit  
+**Related User Story:** As a Compliance Officer, I want all emails encrypted using AES-256 encryption  
+**Description:** Implement comprehensive encryption strategy using AES-256 for data at rest and TLS 1.3 for data in transit. Set up key management service (AWS KMS, HashiCorp Vault) for encryption key storage and rotation. Encrypt database contents, message queue payloads, and file storage. Configure TLS for all API endpoints and inter-service communication. Implement certificate management with automatic renewal.  
+**Acceptance Criteria:**
+- All stored emails encrypted with AES-256 encryption verified through security audit
+- TLS 1.3 enforced on all external API endpoints (TLS 1.2 minimum for legacy support)
+- Encryption keys rotated automatically every 90 days
+- Key management service deployed with high availability
+- Inter-service communication uses mutual TLS authentication
+- No plaintext sensitive data found in logs or error messages
+- SSL certificate auto-renewal configured (Let's Encrypt or similar)  
+**Estimated Effort:** 72 hours  
+**Dependencies:** Task 1  
+**Priority:** Critical
+
+---
+
+### Phase 2: Core AI/ML Components (Tasks 9-16)
+
+**Task ID:** 9  
+**Task Title:** Develop Email Classification Model Training Pipeline  
+**Related User Story:** As a SME, I want 90% accuracy in routing emails to appropriate subject matter experts  
+**Description:** Create training pipeline for email classification model including data collection, labeling, preprocessing, model training, validation, and evaluation. Implement data versioning using DVC or MLflow. Create balanced training dataset with minimum 10,000 labeled examples across all categories. Train initial model and establish baseline accuracy metrics. Implement A/B testing framework for model comparison.  
+**Acceptance Criteria:**
+- Training pipeline executes end-to-end without manual intervention
+- Training dataset contains minimum 10,000 labeled emails balanced across categories
+- Model achieves minimum 85% accuracy on held-out test set (20% of data)
+- Training metrics logged and visualized (loss curves, confusion matrix, precision/recall)
+- Model artifacts versioned with metadata (training date, hyperparameters, performance)
+- A/B testing framework allows comparison of two model versions in production
+- Pipeline execution time < 4 hours for full training cycle  
+**Estimated Effort:** 96 hours  
+**Dependencies:** Task 6, Task 7  
+**Priority:** High
+
+**Task ID:** 10  
+**Task Title:** Implement Intent Classification Service  
+**Related User Story:** As a Customer Support Representative, I want automatic classification of incoming emails  
+**Description:** Build classification service that analyzes preprocessed email content and assigns intent categories with confidence scores. Implement multi-class and multi-label classification to handle emails with multiple intents. Categories should include: General Inquiry, Technical Support, Billing Question, Feature Request, Complaint, Account Access, Password Reset, Refund Request, Product Information, Partnership Inquiry, etc. Return confidence scores for routing decisions.  
+**Acceptance Criteria:**
+- Classification service processes emails within 5 seconds (per spec requirement)
+- Assigns both primary and secondary intent categories with confidence scores (0-1)
+- Classification accuracy > 90% on production traffic (measured over 1 month)
+- Supports minimum 15 distinct intent categories
+- Confidence scores calibrated (90% confidence predictions are correct 90% of time)
+- Service handles 200+ requests per second under load
+- Gracefully handles edge cases (empty emails, non-English, spam)  
+**Estimated Effort:** 72 hours  
+**Dependencies:** Task 9, Task 6  
+**Priority:** Critical
+
+**Task ID:** 11  
+**Task Title:** Build Knowledge Base Ingestion and Embedding Pipeline  
+**Related User Story:** As a Customer Support Representative, I want standardized responses to common inquiries  
+**Description:** Develop pipeline to ingest organizational knowledge documents (FAQs, documentation, policies, previous resolved tickets) and convert them to vector embeddings for storage in vector database. Implement document chunking strategy, embedding generation using sentence transformers or LLM embeddings, and metadata tagging. Create UI for knowledge base administrators to upload and manage documents. Implement incremental updates and version control for knowledge base content.  
+**Acceptance Criteria:**
+- Successfully ingests documents in multiple formats (PDF, DOCX, TXT, HTML, Markdown)
+- Implements smart chunking that preserves semantic meaning (avg 500 tokens per chunk)
+- Generates embeddings and stores in vector database with < 5 second latency per document
+- Web UI allows upload, preview, edit, and delete of knowledge base documents
+- Document versioning tracks changes with rollback capability
+- Metadata tagging supports filtering by department, category, date, author
+- Batch processing handles 1000+ documents without errors  
+**Estimated Effort:** 88 hours  
+**Dependencies:** Task 5, Task 6  
+**Priority:** High
+
+**Task ID:** 12  
+**Task Title:** Implement RAG (Retrieval-Augmented Generation) System  
+**Related User Story:** As a Customer Support Representative, I want the system to automatically generate responses for routine inquiries  
+**Description:** Build RAG system that retrieves relevant context from knowledge base and generates accurate responses using LLM. Implement hybrid search combining dense vector similarity and keyword matching. Create prompt engineering templates that incorporate retrieved context effectively. Implement re-ranking of retrieved documents for relevance. Add citation tracking to link generated responses to source documents. Implement response quality filters to detect hallucinations or low-confidence outputs.  
+**Acceptance Criteria:**
+- Retrieval returns top-k relevant documents (k=5) with minimum 80% relevance score
+- Generated responses are factually accurate (95% accuracy on test set of 500 questions)
+- Response generation completes within 5 seconds (per spec requirement)
+- Citations included in responses linking to source knowledge base documents
+- Hallucination detection flags responses with low confidence or contradictions
+- Hybrid search outperforms vector-only search by minimum 15% on relevance metrics
+- Response quality scores tracked and logged for continuous improvement  
+**Estimated Effort:** 104 hours  
+**Dependencies:** Task 5, Task 6, Task 11  
+**Priority:** Critical
+
+**Task ID:** 13  
+**Task Title:** Develop Routing Rules Engine  
+**Related User Story:** As a SME, I want complex inquiries routed to me based on content analysis  
+**Description:** Build rules engine that assigns emails to appropriate SMEs based on classified intent, confidence scores, keywords, sender attributes, and business logic. Implement priority queuing, workload balancing across SMEs, escalation rules for high-priority emails, and out-of-office handling. Create admin interface for configuring routing rules without code changes. Support both deterministic rules and ML-based routing recommendations.  
+**Acceptance Criteria:**
+- Routing accuracy achieves 90% (emails sent to correct SME on first attempt)
+- Rules engine processes routing decisions in < 1 second
+- Workload balancing distributes emails evenly (max 20% variance across SMEs)
+- Priority emails routed within 30 seconds of ingestion
+- Admin UI allows rule creation with if-then-else logic and priority ordering
+- Out-of-office detection automatically reassigns emails to available SMEs
+- Supports minimum 50 concurrent routing rules without performance degradation  
+**Estimated Effort:** 80 hours  
+**Dependencies:** Task 10, Task 12  
+**Priority:** Critical
+
+**Task ID:** 14  
+**Task Title:** Implement Response Approval Workflow System  
+**Related User Story:** As a Team Manager, I want to review automated responses before dispatch  
+**Description:** Build workflow system for human review and approval of auto-generated responses. Implement approval queues with role-based access, editing capabilities, approval/reject actions, and audit trails. Create notification system to alert reviewers of pending approvals. Implement configurable approval thresholds based on confidence scores (high-confidence responses auto-approved, low-confidence require review). Track approval rates and reasons for rejection to improve model.  
+**Acceptance Criteria:**
+- Approval queue UI displays pending responses with email context and generated reply
+- Reviewers can edit responses inline before approval with rich text editor
+- Responses with confidence > 0.95 auto-approved (configurable threshold)
+- Email notifications sent to reviewers for new pending approvals (real-time)
+- Approval/rejection decisions logged with timestamp, reviewer ID, and reason
+- Average approval processing time < 2 minutes per email
+- Supports minimum 100 pending approvals in queue without UI performance issues  
+**Estimated Effort:** 72 hours  
+**Dependencies:** Task 12  
+**Priority:** High
+
+**Task ID:** 15  
+**Task Title:** Build Continuous Learning and Model Improvement Pipeline  
+**Related User Story:** As a Data Analyst, I want analytics capabilities to identify communication trends  
+**Description:** Implement system to collect feedback on model predictions, capture human corrections, and use this data for continuous model improvement. Build data flywheel that collects corrected classifications, approved/edited responses, and routing accuracy feedback. Implement automated retraining triggers when sufficient new labeled data is collected. Create experiment tracking to compare model versions and safely deploy improvements.  
+**Acceptance Criteria:**
+- Feedback collection captures all human corrections with original prediction context
+- Retraining automatically triggers when 5,000 new labeled examples collected
+- Model performance tracking shows accuracy trends over time (dashboard visualization)
+- A/B testing framework compares new model vs. current model on 10% traffic sample
+- Model rollback capability if new version performs worse than baseline
+- Data quality checks prevent training on corrupted or biased feedback
+- Full retraining cycle completes within 6 hours  
+**Estimated Effort:** 96 hours  
+**Dependencies:** Task 9, Task 10, Task 12, Task 14  
+**Priority:** Medium
+
+**Task ID:** 16  
+**Task Title:** Implement Context-Aware Email Forwarding to SMEs  
+**Related User Story:** As a SME, I want emails forwarded with relevant metadata and previous correspondence history  
+**Description:** Develop email forwarding service that enriches forwarded emails with classification results, confidence scores, relevant knowledge base articles, customer history, previous ticket context, and internal notes. Implement email thread reconstruction to provide full conversation history. Create templates for forwarded emails that present information clearly to SMEs. Include priority indicators and SLA countdowns.  
+**Acceptance Criteria:**
+- Forwarded emails include all relevant metadata (classification, confidence, priority)
+- Email thread reconstruction maintains correct chronological order (100% accuracy)
+- Customer history retrieved and attached (previous tickets, purchase history)
+- Relevant knowledge base articles (top 3) suggested to SME
+- Email formatting is professional and easy to read (template-based)
+- SLA countdown timer displayed if applicable (e.g., "Response due in 4 hours")
+- Forwarding latency < 2 seconds from routing decision to SME inbox  
+**Estimated Effort:** 56 hours  
+**Dependencies:** Task 13, Task 12  
+**Priority:** High
+
+---
+
+### Phase 3: Security, Compliance & Access Control (Tasks 17-22)
+
+**Task ID:** 17  
+**Task Title:** Implement Role-Based Access Control (RBAC) System  
+**Related User Story:** As a Compliance Officer, I want RBAC implemented for secure system access  
+**Description:** Build comprehensive RBAC system with roles including: System Administrator, IT Administrator, Customer Support Representative, SME, Team Manager, Compliance Officer, Data Analyst, and Read-Only User. Implement permission system for actions: view emails, edit responses, modify routing rules, access knowledge base, view analytics, manage users, configure system settings. Create user management UI for assigning roles and permissions. Integrate with authentication system.  
+**Acceptance Criteria:**
+- Minimum 8 distinct roles defined with documented permissions
+- Permission checks enforce access control on all protected endpoints (100% coverage)
+- User management UI allows role assignment, permission viewing, and bulk operations
+- Audit log records all permission changes with timestamp and admin identity
+- Role hierarchy implemented (admins inherit lower-level permissions)
+- Permission denied errors return appropriate HTTP 403 status with clear messages
+- Penetration testing confirms no privilege escalation vulnerabilities  
+**Estimated Effort:** 64 hours  
+**Dependencies:** Task 1, Task 8  
+**Priority:** Critical
+
+**Task ID:** 18  
+**Task Title:** Implement Multi-Factor Authentication (MFA) for Administrative Access  
+**Related User Story:** As a Compliance Officer, I want MFA required for administrative access  
+**Description:** Implement MFA for all administrative and privileged user accounts. Support TOTP (Time-based One-Time Password) apps like Google Authenticator, SMS-based codes, and hardware security keys (FIDO2/WebAuthn). Create enrollment flow for users to register MFA devices. Implement backup codes for account recovery. Configure MFA enforcement policies per role. Add MFA audit logging.  
+**Acceptance Criteria:**
+- MFA enrollment UI guides users through setup process (QR code for TOTP apps)
+- Supports minimum 3 MFA methods (TOTP, SMS, hardware keys)
+- MFA required for all System Admin and IT Admin roles (enforced)
+- Backup codes generated (10 codes) and securely stored for account recovery
+- MFA bypass not possible through any means (verified through security testing)
+- Login flow includes MFA challenge after correct password entry
+- MFA events logged (enrollment, successful auth, failed attempts)  
+**Estimated Effort:** 56 hours  
+**Dependencies:** Task 17  
+**Priority:** Critical
+
+**Task ID:** 19  
+**Task Title:** Implement GDPR and CCPA Compliance Features  
+**Related User Story:** As a Compliance Officer, I want compliance with GDPR, CCPA, and other data protection regulations  
+**Description:** Build compliance features including: right to access (data export), right to deletion (complete data removal), right to rectification (data correction), consent management, data retention policies, and data minimization. Implement anonymization for analytics data. Create privacy policy acceptance workflow. Build compliance reporting dashboard showing data handling practices. Implement data processing records as required by GDPR Article 30.  
+**Acceptance Criteria:**
+- Data export API generates complete user data package in machine-readable format (JSON)
+- Data deletion permanently removes all user PII within 30 days (verified)
+- Consent management tracks user preferences with timestamp and version
+- Data retention policies automatically delete data after configurable period (default 7 years)
+- Anonymization pipeline removes PII from analytics data (tested with 100% accuracy)
+- Privacy policy version control tracks user acceptance of each version
+- Compliance dashboard displays data processing activities, retention schedules, deletion requests
+- GDPR Article 30 records maintained and exportable for regulatory audits  
+**Estimated Effort:** 104 hours  
+**Dependencies:** Task 8, Task 17  
+**Priority:** Critical
+
+**Task ID:** 20  
+**Task Title:** Implement PII Detection and Handling System  
+**Related User Story:** As a Compliance Officer, I want PII anonymized or masked before processing  
+**Description:** Build PII detection system that identifies and handles sensitive information including: email addresses, phone numbers, social security numbers, credit card numbers, passport numbers, addresses, and dates of birth. Implement masking for logs and analytics, redaction for non-authorized viewers, and encryption for storage. Create configurable PII handling policies per data type. Implement false positive reduction using context awareness.  
+**Acceptance Criteria:**
+- PII detection accuracy > 95% on test dataset (1000 examples with known PII)
+- False positive rate < 5% to avoid over-redaction
+- Supports detection of minimum 10 PII types (email, phone, SSN, credit card, etc.)
+- Automatic masking in application logs (e.g., "john.doe@email.com" → "j***@e***.com")
+- Real-time detection processes emails within 2 seconds
+- Configurable policies per PII type (mask, redact, encrypt, allow)
+- Admin UI for reviewing and correcting false positives/negatives  
+**Estimated Effort:** 80 hours  
+**Dependencies:** Task 7, Task 19  
+**Priority:** High
+
+**Task ID:** 21  
+**Task Title:** Implement Comprehensive Audit Logging System  
+**Related User Story:** As a Compliance Officer, I want audit trails for all system access and data modifications  
+**Description:** Build centralized audit logging system that captures: user authentication events, authorization decisions, data access (who viewed which emails), data modifications (edits, deletions), configuration changes, model predictions and overrides, approval workflow actions, and system errors. Implement tamper-proof log storage with write-once capabilities. Create log retention policies and archive strategy. Build audit log search and reporting UI for compliance officers.  
+**Acceptance Criteria:**
+- All security-relevant events logged with timestamp, user ID, action, and outcome
+- Logs stored in tamper-proof storage (append-only, cryptographically signed)
+- Log retention minimum 7 years for compliance data (configurable)
+- Search UI allows filtering by date range, user, action type, and resource
+- Logs exportable in multiple formats (JSON, CSV, PDF report)
+- Log completeness verified (no gaps in sequential event IDs)
+- Audit reports generated on-demand showing user activity over time period  
+**Estimated Effort:** 72 hours  
+**Dependencies:** Task 17, Task 19  
+**Priority:** High
+
+**Task ID:** 22  
+**Task Title:** Conduct Security Penetration Testing and Vulnerability Assessment  
+**Related User Story:** As a Compliance Officer, I want security validation through penetration testing  
+**Description:** Perform comprehensive security assessment including: automated vulnerability scanning, manual penetration testing, authentication bypass attempts, authorization escalation testing, SQL injection testing, XSS testing, CSRF testing, API security testing, and social engineering assessments. Document all findings with severity ratings. Remediate critical and high-severity vulnerabilities. Obtain third-party security certification if required.  
+**Acceptance Criteria:**
+- Automated scan with tools (OWASP ZAP, Burp Suite, Nessus) finds zero critical vulnerabilities
+- Manual penetration testing confirms no authentication/authorization bypasses possible
+- SQL injection testing on all input fields returns no vulnerabilities
+- XSS testing confirms proper output encoding on all user-generated content
+- CSRF protection verified on all state-changing operations
+- API security tested (rate limiting, authentication, input validation)
+- Security assessment report documents findings with remediation recommendations
+- All critical and high-severity issues remediated and verified as fixed  
+**Estimated Effort:** 120 hours  
+**Dependencies:** Task 17, Task 18, Task 19, Task 20, Task 21  
+**Priority:** Critical
+
+---
+
+### Phase 4: User Interface & Monitoring (Tasks 23-28)
+
+**Task ID:** 23  
+**Task Title:** Develop Performance Monitoring Dashboard  
+**Related User Story:** As an IT Administrator, I want real-time monitoring of system performance  
+**Description:** Build comprehensive monitoring dashboard displaying: email processing throughput, classification accuracy, response time metrics, queue depths, error rates, API latency, database performance, system resource utilization (CPU, memory, disk), and service health status. Implement real-time updates using WebSockets. Create customizable views for different user roles. Include historical trend analysis and comparative metrics (week-over-week, month-over-month).  
+**Acceptance Criteria:**
+- Dashboard displays all key metrics updating in real-time (< 5 second refresh)
+- Email processing metrics show current throughput (emails/hour) and average response time
+- Classification accuracy displayed with breakdown by intent category
+- Service health indicators show green/yellow/red status for each component
+- Historical charts show trends over 24 hours, 7 days, 30 days, 90 days
+- Role-based views show relevant metrics per user type (admin sees all, SME sees their queue)
+- Dashboard responsive and loads in < 3 seconds on standard broadband connection  
+**Estimated Effort:** 88 hours  
+**Dependencies:** Task 1, Task 4, Task 10, Task 12, Task 13  
+**Priority:** High
+
+**Task ID:** 24  
+**Task Title:** Build System Configuration and Admin Control Panel  
+**Related User Story:** As an IT Administrator, I want configuration panel for managing the system  
+**Description:** Create admin control panel for managing: routing rules, classification thresholds, approval workflows, knowledge base content, user accounts and roles, system parameters (queue sizes, timeouts, retry limits), email templates, notification settings, and integration credentials. Implement configuration versioning and rollback. Add validation for configuration changes. Include configuration export/import for disaster recovery.  
+**Acceptance Criteria:**
+- Admin panel provides UI for all configurable system parameters (50+ settings)
+- Configuration changes validated before saving (type checking, range validation)
+- Configuration versioning tracks who changed what and when
+- Rollback capability restores previous configuration version
+- Configuration export generates complete backup file (encrypted)
+- Import validates configuration file and prevents corrupted imports
+- Changes take effect without system restart where possible (hot reload)
+- Audit log records all configuration changes with before/after values  
+**Estimated Effort:** 96 hours  
+**Dependencies:** Task 17, Task 21  
+**Priority:** High
+
+**Task ID:** 25  
+**Task Title:** Implement Manual Override and Escalation Interface  
+**Related User Story:** As a Customer Support Representative, I want manual intervention capabilities  
+**Description:** Build UI for human operators to manually override system decisions, reclassify emails, modify generated responses, escalate to supervisors, and directly assign emails to specific SMEs. Implement queue management features: prioritize/deprioritize emails, merge duplicate inquiries, split multi-topic emails, and add internal notes. Create shortcuts and bulk operations for efficiency. Log all manual interventions for model improvement.  
+**Acceptance Criteria:**
+- Override UI accessible within 2 clicks from any email view
+- Manual classification overrides immediately update routing and model training data
+- Response editing supports rich text formatting with preview before sending
+- Escalation workflow routes to supervisor with context (reason, urgency)
+- Queue management supports bulk operations (select multiple, apply action)
+- Internal notes support @mentions to notify other team members
+- All manual interventions logged with user ID, timestamp, and reason
+- Keyboard shortcuts implemented for common actions (efficiency improvement)  
+**Estimated Effort:** 72 hours  
+**Dependencies:** Task 23, Task 24  
+**Priority:** Medium
+
+**Task ID:** 26  
+**Task Title:** Build Analytics and Reporting Dashboard  
+**Related User Story:** As a Data Analyst, I want analytics capabilities to identify communication trends  
+**Description:** Create analytics dashboard with visualizations for: email volume trends, category distribution, response time analysis, SME workload distribution, customer satisfaction correlation, common inquiry topics, knowledge base coverage gaps, model performance over time, and operational efficiency metrics. Implement custom report builder with filters, date ranges, and export capabilities. Schedule automated report generation and email delivery.  
+**Acceptance Criteria:**
+- Dashboard includes minimum 15 visualization types (line charts, bar charts, pie charts, heatmaps)
+- Report builder allows custom filters (date range, category, SME, priority, status)
+- Reports exportable as PDF, Excel, and CSV formats
+- Scheduled reports delivered via email at configured intervals (daily, weekly, monthly)
+- Email volume trends show hourly, daily, weekly patterns with forecasting
+- Knowledge gap analysis identifies topics with low auto-response success rate
+- Response time metrics broken down by category and SME with SLA compliance %
+- Dashboard loads and renders in < 5 seconds with 6 months of historical data  
+**Estimated Effort:** 104 hours  
+**Dependencies:** Task 23, Task 10, Task 12, Task 13  
+**Priority:** Medium
+
+**Task ID:** 27  
+**Task Title:** Implement Alerting and Notification System  
+**Related User Story:** As an IT Administrator, I want alerts for system anomalies and critical issues  
+**Description:** Build intelligent alerting system that monitors for: service failures, performance degradation, queue overflow, classification accuracy drops, database connection issues, API rate limit approaching, disk space low, unusual traffic patterns, and security events. Implement alert routing via multiple channels (email, SMS, Slack, PagerDuty). Create alert rules with thresholds, severity levels, escalation policies, and alert suppression during maintenance windows. Implement on-call rotation scheduling.  
+**Acceptance Criteria:**
+- Alert rules configurable with thresholds (e.g., "alert if queue depth > 1000 for 5 minutes")
+- Supports 4 severity levels (Critical, High, Medium, Low) with different routing policies
+- Multiple notification channels configured (email, SMS, Slack webhook, PagerDuty integration)
+- Escalation policy automatically notifies manager if alert unacknowledged for 15 minutes
+- Alert suppression during scheduled maintenance (configurable maintenance windows)
+- On-call rotation scheduling with calendar integration
+- Alert dashboard shows current alerts, acknowledged alerts, and resolved alerts
+- Alert fatigue reduction through smart grouping and deduplication  
+**Estimated Effort:** 80 hours  
+**Dependencies:** Task 23, Task 24  
+**Priority:** High
+
+**Task ID:** 28  
+**Task Title:** Develop Knowledge Base Management Interface  
+**Related User Story:** As a Team Manager, I want easy knowledge base content management  
+**Description:** Build user-friendly interface for knowledge base administrators to add, edit, search, organize, and delete knowledge base articles. Implement WYSIWYG editor for content creation, category/tag management, version history, search functionality, article approval workflow, and usage analytics (which articles are most frequently retrieved). Include content quality scoring and recommendations for article improvements based on retrieval success rates.  
+**Acceptance Criteria:**
+- WYSIWYG editor supports rich text formatting, images, tables, and code blocks
+- Category and tag taxonomy allows hierarchical organization (parent/child relationships)
+- Version history tracks all changes with diff view and rollback capability
+- Search functionality finds articles by title, content, tags with relevance ranking
+- Article approval workflow requires review before publication (configurable per role)
+- Usage analytics show view count, retrieval count, and resolution success rate per article
+- Content quality score calculated based on retrieval success and user feedback
+- Bulk import supports CSV and JSON for migrating existing knowledge bases  
+**Estimated Effort:** 88 hours  
+**Dependencies:** Task 11, Task 24  
+**Priority:** Medium
+
+---
+
+### Phase 5: Testing, Deployment & Operations (Tasks 29-36)
+
+**Task ID:** 29  
+**Task Title:** Develop Comprehensive Unit Test Suite  
+**Related User Story:** As a Development Engineer, I want high code quality through thorough testing  
+**Description:** Create unit tests for all major components using pytest (Python) or Jest (JavaScript). Achieve minimum 80% code coverage across all services. Test edge cases, error conditions, boundary values, and happy paths. Implement test fixtures and mocks for external dependencies. Set up automated test execution in CI/CD pipeline with coverage reporting.  
+**Acceptance Criteria:**
+- Minimum 80% code coverage across all repositories (enforced in CI)
+- All public functions and methods have corresponding unit tests
+- Tests execute in < 5 minutes total (parallelized execution)
+- Test failures block pull request merging (CI pipeline gate)
+- Coverage reports generated automatically and published to dashboard
+- Flaky tests identified and fixed (< 1% flaky test rate)
+- Test documentation explains purpose and test cases for complex scenarios  
+**Estimated Effort:** 120 hours  
+**Dependencies:** All development tasks  
+**Priority:** Critical
+
+**Task ID:** 30  
+**Task Title:** Implement Integration Testing Suite  
+**Related User Story:** As an IT Administrator, I want confidence in system integration points  
+**Description:** Build integration tests that verify interactions between components: email ingestion → message queue → classification → RAG → response generation → approval workflow → delivery. Test database operations, API integrations, message queue behavior, and external service interactions. Use Docker Compose to spin up test environments. Implement contract testing for API boundaries.  
+**Acceptance Criteria:**
+- Integration tests cover all major workflow paths (happy path and error scenarios)
+- Tests execute against real instances of dependencies (database, queue, etc.) in containers
+- Test environment spins up/down automatically for each test run
+- API contract tests ensure backwards compatibility (detect breaking changes)
+- Integration test suite completes in < 15 minutes
+- Tests verify end-to-end email processing from ingestion to response delivery
+- Database state properly cleaned up between tests (no test pollution)  
+**Estimated Effort:** 96 hours  
+**Dependencies:** Task 29  
+**Priority:** Critical
+
+**Task ID:** 31  
+**Task Title:** Conduct End-to-End Workflow Testing  
+**Related User Story:** As a Stakeholder, I want confidence the complete system works as designed  
+**Description:** Create end-to-end tests simulating real user workflows from email arrival to response delivery. Test complete scenarios: routine inquiry auto-response, complex inquiry routing to SME, approval workflow, manual override, escalation, and knowledge base updates. Use Selenium or Playwright for UI automation. Test across different browsers and devices. Implement visual regression testing for UI changes.  
+**Acceptance Criteria:**
+- Minimum 10 end-to-end test scenarios covering critical user journeys
+- Tests execute against staging environment matching production configuration
+- UI automation tests work across Chrome, Firefox, and Safari browsers
+- Visual regression testing detects unintended UI changes (screenshot comparison)
+- E2E test suite completes in < 30 minutes
+- Tests verify correct email delivery (sent to right recipient with right content)
+- Performance assertions included (e.g., workflow completes within 10 seconds)  
+**Estimated Effort:** 88 hours  
+**Dependencies:** Task 30  
+**Priority:** High
+
+**Task ID:** 32  
+**Task Title:** Perform Load and Performance Testing  
+**Related User Story:** As a System Administrator, I want validation of 10,000 emails/hour capacity  
+**Description:** Conduct load testing to validate system performance under expected and peak loads. Test scenarios: 10,000 emails/hour sustained load, 20,000 emails/hour burst load, 100 concurrent users, database query performance under load, API rate limit behavior, and queue processing capacity. Use tools like JMeter, Locust, or k6. Identify bottlenecks and optimize. Generate performance test reports with response time percentiles (p50, p95, p99).  
+**Acceptance Criteria:**
+- System sustains 10,000 emails/hour for 8 hours without errors (meets spec requirement)
+- System handles burst load of 20,000 emails/hour for 30 minutes
+- Average email processing time remains < 5 seconds under load (p95 < 8 seconds)
+- API endpoints respond within 200ms for p95 under 100 concurrent users
+- Database query performance degradation < 10% under peak load
+- Queue depth remains manageable (< 5000 backlog) during sustained load
+- Performance test report documents baseline metrics and identifies optimization opportunities  
+**Estimated Effort:** 96 hours  
+**Dependencies:** Task 31  
+**Priority:** Critical
+
+**Task ID:** 33  
+**Task Title:** Implement Blue-Green Deployment Strategy  
+**Related User Story:** As an IT Administrator, I want zero-downtime deployments  
+**Description:** Implement blue-green deployment architecture to enable zero-downtime updates. Configure load balancer to switch traffic between blue (current) and green (new) environments. Implement health checks to verify new environment before traffic switch. Create automated deployment scripts with rollback capability. Test deployment process end-to-end including rollback scenarios. Document deployment procedures and runbooks.  
+**Acceptance Criteria:**
+- Blue-green deployment successfully switches traffic without dropped requests
+- Health checks verify all services operational before traffic switch (minimum 5 checks pass)
+- Rollback completes in < 5 minutes by switching traffic back to blue environment
+- Deployment automation scripts execute without manual intervention
+- Zero-downtime verified through continuous monitoring during deployment
+- Deployment runbook documents step-by-step procedures and troubleshooting
+- Practice deployments conducted monthly to maintain team proficiency  
+**Estimated Effort:** 72 hours  
+**Dependencies:** Task 1, Task 4  
+**Priority:** High
+
+**Task ID:** 34  
+**Task Title:** Set Up Production Monitoring and Observability  
+**Related User Story:** As an IT Administrator, I want comprehensive production observability  
+**Description:** Deploy production monitoring stack including: application performance monitoring (APM), distributed tracing, centralized logging, metrics collection, and error tracking. Implement Prometheus/Grafana or DataDog for metrics, ELK stack or Splunk for logs, Jaeger or Zipkin for distributed tracing, and Sentry for error tracking. Create service level indicators (SLIs) and service level objectives (SLOs). Build incident response dashboards.  
+**Acceptance Criteria:**
+- All services instrumented with metrics, logs, and traces
+- Centralized logging aggregates logs from all services with search capabilities
+- Distributed tracing tracks requests across service boundaries (< 5% overhead)
+- Error tracking captures and groups errors with stack traces and context
+- SLIs defined for key metrics (availability, latency, error rate, throughput)
+- SLOs documented (e.g., "99.9% availability", "95% requests < 5 seconds")
+- Incident dashboards show real-time system health with alert status
+- Retention policies configured (metrics: 1 year, logs: 90 days, traces: 7 days)  
+**Estimated Effort:** 104 hours  
+**Dependencies:** Task 27  
+**Priority:** Critical
+
+**Task ID:** 35  
+**Task Title:** Develop Disaster Recovery and Business Continuity Plan  
+**Related User Story:** As a Stakeholder, I want assurance of business continuity  
+**Description:** Create comprehensive disaster recovery (DR) plan including: backup strategy, recovery time objective (RTO) and recovery point objective (RPO) definitions, failover procedures, data replication strategy, and regular DR drills. Implement automated backups for databases, knowledge base, configuration, and logs. Set up geographically distributed infrastructure for high availability. Document incident response procedures and communication plans.  
+**Acceptance Criteria:**
+- Automated backups run daily with successful completion verified (99% success rate)
+- RPO < 1 hour (maximum 1 hour of data loss in worst case)
+- RTO < 4 hours (system restored within 4 hours of major incident)
+- Geographically distributed infrastructure across minimum 2 regions
+- DR plan documented with step-by-step recovery procedures
+- DR drills conducted quarterly with documented results and lessons learned
+- Backup restoration tested monthly to verify integrity
+- Incident communication plan includes stakeholder notification templates  
+**Estimated Effort:** 80 hours  
+**Dependencies:** Task 33, Task 34  
+**Priority:** High
+
+**Task ID:** 36  
+**Task Title:** Create System Documentation and User Training Materials  
+**Related User Story:** As a Team Manager, I want comprehensive training for my team  
+**Description:** Develop complete documentation suite including: system architecture documentation, API documentation, user guides for each role, administrator guides, troubleshooting guides, FAQ, video tutorials, onboarding materials, and runbooks for common operational tasks. Create interactive training modules. Establish documentation maintenance process to keep materials current. Host documentation on accessible portal with search functionality.  
+**Acceptance Criteria:**
+- Architecture documentation includes system diagrams, component descriptions, data flows
+- API documentation complete with examples for all endpoints (OpenAPI/Swagger)
+- Role-specific user guides (one for each of 8 user roles) with screenshots
+- Video tutorials covering 10 common tasks (2-5 minutes each)
+- Onboarding checklist guides new users through first-time setup
+- Troubleshooting guide addresses 20+ common issues with solutions
+- Documentation portal searchable with navigation menu and cross-links
+- Documentation review process ensures updates within 30 days of feature changes  
+**Estimated Effort:** 120 hours  
+**Dependencies:** All development tasks  
+**Priority:** Medium
+
+---
+
+### Phase 6: Business Metrics & Optimization (Tasks 37-40)
+
+**Task ID:** 37  
+**Task Title:** Implement Response Time Tracking and Measurement System  
+**Related User Story:** As a Stakeholder, I want to reduce response time by 60% within three months  
+**Description:** Build comprehensive response time tracking system measuring time from email receipt to response delivery. Track metrics by: email category, priority level, time of day, day of week, and handling path (auto-response vs. routed to SME). Establish baseline metrics before Email Router deployment. Create comparison reports showing before/after performance. Implement automated alerting if response time SLAs are at risk.  
+**Acceptance Criteria:**
+- Response time measured for 100% of processed emails (no sampling)
+- Metrics broken down by category, priority, handler, time period
+- Baseline metrics established from 3 months of pre-deployment data
+- Dashboard shows real-time comparison: current vs. baseline vs. target (60% reduction)
+- Automated reports generated weekly showing progress toward 60% reduction goal
+- SLA violation alerts trigger when emails exceed target response time thresholds
+- Historical trend analysis shows month-over-month improvement
+- Target: Reduce average response time from baseline to 40% of original within 3 months  
+**Estimated Effort:** 56 hours  
+**Dependencies:** Task 23, Task 26  
+**Priority:** Critical
+
+**Task ID:** 38  
+**Task Title:** Implement Customer Satisfaction Measurement System  
+**Related User Story:** As a Stakeholder, I want to improve customer satisfaction by 30%  
+**Description:** Build customer satisfaction (CSAT) tracking system that sends surveys after email interactions, collects ratings, tracks net promoter scores (NPS), and analyzes sentiment. Implement follow-up surveys at 24 hours and 7 days post-interaction. Create CSAT dashboard showing trends, breakdown by category/handler, and correlation with response times. Establish baseline CSAT before deployment and track improvement toward 30% increase goal.  
+**Acceptance Criteria:**
+- CSAT surveys sent automatically after email resolution (90% send rate)
+- Survey response rate > 20% through thoughtful timing and design
+- Multiple satisfaction metrics tracked (CSAT score, NPS, sentiment analysis)
+- Baseline CSAT established from 3 months of pre-deployment data
+- Dashboard shows satisfaction trends with breakdown by email category and handler
+- Correlation analysis identifies which factors most impact satisfaction
+- Negative feedback triggers review process to identify improvement opportunities
+- Target: Improve CSAT score by 30% within 6 months of deployment  
+**Estimated Effort:** 64 hours  
+**Dependencies:** Task 26, Task 37  
+**Priority:** High
+
+**Task ID:** 39  
+**Task Title:** Optimize Classification Model Based on Production Feedback  
+**Related User Story:** As a SME, I want 90% accuracy in routing by end of pilot phase  
+**Description:** Implement continuous optimization process for classification model using production feedback data. Analyze misclassifications, collect correction data, retrain model monthly, and A/B test improvements. Focus on reducing false positives for routing (reducing SME interruptions with wrong emails) and improving confidence calibration. Create optimization dashboard tracking accuracy improvements over time. Document model versioning and performance comparison.  
+**Acceptance Criteria:**
+- Classification accuracy improves from 85% (baseline) to 90% within pilot phase (3 months)
+- Monthly retraining cycles using collected correction data (minimum 5,000 corrections)
+- A/B testing framework compares new models against production with statistical significance
+- False positive rate for SME routing reduced by 50% from baseline
+- Confidence score calibration improved (confidence matches actual accuracy within 5%)
+- Model versioning tracks performance metrics for each deployed version
+- Optimization dashboard shows accuracy trends and identifies problematic categories
+- Target: Achieve and maintain 90% classification accuracy  
+**Estimated Effort:** 88 hours  
+**Dependencies:** Task 15, Task 37  
+**Priority:** High
+
+**Task ID:** 40  
+**Task Title:** Measure and Report on Automation Rate and Efficiency Gains  
+**Related User Story:** As a Stakeholder, I want to automate 40% of incoming emails  
+**Description:** Implement metrics tracking automation rate (percentage of emails fully auto-responded without human intervention), efficiency gains (staff time saved), and cost savings. Track manual intervention frequency, SME time allocation changes, and administrative overhead reduction. Create executive dashboard showing ROI metrics, efficiency improvements, and progress toward 40% automation target. Generate monthly reports for stakeholders with business impact analysis.  
+**Acceptance Criteria:**
+- Automation rate calculated daily: (auto-responded emails / total emails) × 100%
+- Baseline automation rate (pre-deployment): 0%, Target: 40% within 3 months
+- Staff time savings measured through time tracking integration or surveys
+- Dashboard shows automation rate trends with projection to reach 40% target
+- Cost savings calculated: (hours saved × average hourly cost) - system operation costs
+- ROI metrics show payback period and ongoing savings
+- Monthly executive reports generated with business impact summary
+- Target: Achieve 40% automation rate within 3 months and 70% within 12 months  
+**Estimated Effort:** 64 hours  
+**Dependencies:** Task 23, Task 26, Task 37  
+**Priority:** High
